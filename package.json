@@ -1,0 +1,19 @@
+{
+  "name": "graphql.js_how-to",
+  "version": "1.0.0",
+  "description": "Results of my studies about GraphQL.js for building API Server apps with Node",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xmey95/GraphQL.js_how-to.git"
+  },
+  "author": "xmey95",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/xmey95/GraphQL.js_how-to/issues"
+  },
+  "homepage": "https://github.com/xmey95/GraphQL.js_how-to#readme"
+}
