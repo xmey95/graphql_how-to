@@ -12,12 +12,18 @@ const connectMongo = require('./mongo-connector');
 const schema = require('./schema');
 
 const start = async () => {
+
   const mongo = await connectMongo();
+
   var app = express();
+
+  //Endpoint for GraphQL API
   app.use('/graphql', bodyParser.json(), graphqlExpress({
     context: {mongo},
     schema
   }));
+
+  //With this Endpoint API supports Graphiql Debugger that works on /graphql Endpoint
   app.use('/graphiql', graphiqlExpress({
     endpointURL: '/graphql',
   }));
