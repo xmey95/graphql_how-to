@@ -9,6 +9,7 @@ module.exports = async () => {
   const db = await MongoClient.connect(MONGO_URL);
   return {
     //Return list of entries
-    Links: db.collection('links')
+    Links: db.collection('links'),
+    Users: db.collection('users'),
   };
 }
