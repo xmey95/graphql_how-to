@@ -10,7 +10,7 @@ module.exports = {
 
   //Mutation implementations
   Mutation: {
-    //
+    //Resolver for creating links
     createLink: async (root, data, {mongo: {Links}, user}) => {
       const newLink = Object.assign({postedById: user && user._id}, data)
       //Use insert function for add new entry into MongoDB
@@ -18,7 +18,7 @@ module.exports = {
       return Object.assign({id: response.insertedIds[0]}, newLink);
     },
 
-    //
+    //Resolver for creating users
     createUser: async (root, data, {mongo: {Users}}) => {
       // You need to convert the given arguments into the format for the
       // `User` type, grabbing email and password from the "authProvider".
@@ -31,7 +31,7 @@ module.exports = {
       return Object.assign({id: response.insertedIds[0]}, newUser);
     },
 
-    //
+    //Resolver for signin users
     signinUser: async (root, data, {mongo: {Users}}) => {
       const user = await Users.findOne({email: data.email.email});
       if (data.email.password === user.password) {
@@ -44,9 +44,9 @@ module.exports = {
   Link: {
     id: root => root._id || root.id,
 
-    //
-    postedBy: async ({postedById}, data, {mongo: {Users}}) => {
-        return await Users.findOne({_id: postedById});
+    //Composed Field for extrapolate user data from post
+    postedBy: async ({postedById}, data, {dataloaders: {userLoader}}) => {
+        return await userLoader.load(postedById);
     },
   },
 

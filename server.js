@@ -7,13 +7,12 @@ const bodyParser = require('body-parser');
 // for you, based on your schema.
 const {graphqlExpress, graphiqlExpress} = require('apollo-server-express');
 
-//
 const connectMongo = require('./mongo-connector');
 
-//
 const {authenticate} = require('./authentication');
 
-//
+const buildDataloaders = require('./dataloaders');
+
 const schema = require('./schema');
 
 const start = async () => {
@@ -26,7 +25,11 @@ const start = async () => {
   const buildOptions = async (req, res) => {
     const user = await authenticate(req, mongo.Users);
     return {
-      context: {mongo, user}, // This context object is passed to all resolvers.
+      context: {
+        dataloaders: buildDataloaders(mongo),
+        mongo,
+        user
+      }, // This context object is passed to all resolvers.
       schema,
     };
   };
@@ -37,7 +40,7 @@ const start = async () => {
   //With this Endpoint API supports Graphiql Debugger that works on /graphql Endpoint
   app.use('/graphiql', graphiqlExpress({
     endpointURL: '/graphql',
-    //
+    //Used for Test
     passHeader: "'Authorization': 'bearer token-Hello'",
   }));
 
