@@ -12,7 +12,7 @@ const typeDefs = `
   }
 
   type Query {
-    allLinks: [Link!]!
+    allLinks(filter: LinkFilter, skip: Int, first: Int): [Link!]!
   }
 
   type Mutation {
@@ -21,6 +21,12 @@ const typeDefs = `
     createUser(name: String!, authProvider: AuthProviderSignupData!): User
 
     signinUser(email: AUTH_PROVIDER_EMAIL): SigninPayload!
+  }
+
+  input LinkFilter {
+    OR: [LinkFilter!]
+    description_contains: String
+    url_contains: String
   }
 
   type User {
