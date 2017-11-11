@@ -1,3 +1,5 @@
+const pubsub = require('../pubsub');
+
 module.exports = {
 
   //Query implementations
@@ -12,10 +14,14 @@ module.exports = {
   Mutation: {
     //Resolver for creating links
     createLink: async (root, data, {mongo: {Links}, user}) => {
+      //assertValidLink(data);
       const newLink = Object.assign({postedById: user && user._id}, data)
       //Use insert function for add new entry into MongoDB
       const response = await Links.insert(newLink);
-      return Object.assign({id: response.insertedIds[0]}, newLink);
+      newLink.id = response.insertedIds[0]
+      pubsub.publish('Link', {Link: {mutation: 'CREATED', node: newLink}});
+  
+      return newLink;
     },
 
     //Resolver for creating users
@@ -37,6 +43,12 @@ module.exports = {
       if (data.email.password === user.password) {
         return {token: `token-${user.email}`, user};
       }
+    },
+  },
+
+  Subscription: {
+    Link: {
+      subscribe: () => pubsub.asyncIterator('Link'),
     },
   },
 
