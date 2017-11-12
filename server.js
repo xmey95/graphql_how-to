@@ -7,24 +7,31 @@ const bodyParser = require('body-parser');
 // for you, based on your schema.
 const {graphqlExpress, graphiqlExpress} = require('apollo-server-express');
 
+//Link Mongo Setup to main source
 const connectMongo = require('./mongo-connector');
 
+//Link Authentication setup to main source
 const {authenticate} = require('./authentication');
 
+//Link dataloaders to main source
 const buildDataloaders = require('./dataloaders');
 
+//Link schemas
 const schema = require('./schema');
 
 const {execute, subscribe} = require('graphql');
 
+//This package will handle you to create a server
 const {createServer} = require('http');
 
 const {SubscriptionServer} = require('subscriptions-transport-ws');
 
+//Set PORT of server
 const PORT = 3000;
 
 const start = async () => {
 
+  //Connect to MongoDB
   const mongo = await connectMongo();
 
   var app = express();
@@ -50,9 +57,11 @@ const start = async () => {
     endpointURL: '/graphql',
     //Used for Test
     passHeader: "'Authorization': 'bearer token-Hello'",
+    //Declare subscriptions end-point to graphiql
     subscriptionsEndpoint: `ws://localhost:${PORT}/subscriptions`,
   }));
 
+  //Create and start server with all setups like arguments
   const server = createServer(app);
   server.listen(PORT, () => {
     SubscriptionServer.create(

@@ -1,3 +1,4 @@
+//Function that create and return token
 const HEADER_REGEX = /bearer token-(.*)$/;
 
 module.exports.authenticate = async ({headers: {authorization}}, Users) => {

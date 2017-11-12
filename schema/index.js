@@ -2,7 +2,7 @@
 const {makeExecutableSchema} = require('graphql-tools');
 const resolvers = require('./resolvers');
 
-// Define your types here
+// Define your schemas here
 const typeDefs = `
   type Link {
     id: ID!

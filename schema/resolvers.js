@@ -1,5 +1,6 @@
 const pubsub = require('../pubsub');
 
+//Function that build filter passed by GraphQL request
 function buildFilters({OR = [], description_contains, url_contains}) {
   const filter = (description_contains || url_contains) ? {} : null;
   if (description_contains) {
@@ -44,7 +45,7 @@ module.exports = {
       const response = await Links.insert(newLink);
       newLink.id = response.insertedIds[0]
       pubsub.publish('Link', {Link: {mutation: 'CREATED', node: newLink}});
-  
+
       return newLink;
     },
 
@@ -70,6 +71,7 @@ module.exports = {
     },
   },
 
+  //Subscription resolvers
   Subscription: {
     Link: {
       subscribe: () => pubsub.asyncIterator('Link'),
