@@ -2,7 +2,24 @@
 
 Results of my studies about GraphQL.js for building API Server apps with Node.js and Express. 
 
-//TOC
+<!-- TOC -->
+
+- [1. GraphQL.js_how-to](#1-graphqljshow-to)
+    - [1.1. GraphQL](#11-graphql)
+        - [1.1.1. Fields](#111-fields)
+        - [1.1.2. Arguments](#112-arguments)
+        - [1.1.3. Mutations](#113-mutations)
+        - [1.1.4. Schemas and Types](#114-schemas-and-types)
+    - [1.2. GraphQL.js](#12-graphqljs)
+        - [1.2.1. First Setup](#121-first-setup)
+        - [1.2.2. Queries](#122-queries)
+        - [1.2.3. Mutations](#123-mutations)
+        - [1.2.4. Connectors](#124-connectors)
+        - [1.2.5. Authentication](#125-authentication)
+        - [1.2.6. Dataloaders](#126-dataloaders)
+        - [1.2.7. Filtering](#127-filtering)
+
+<!-- /TOC -->
 
 ## 1.1. GraphQL
 
@@ -187,7 +204,7 @@ You can try running the server now with:
 node ./src/index.js
 ```
 
-### Queries
+### 1.2.2. Queries
 
 First, add the query definition for allLinks to the schema inside src/schema/index.js:
 
@@ -251,7 +268,7 @@ Try it out! On the left-most text box, type a simple query for listing all links
 
 <img src="https://i.imgur.com/LuALGY6.png">
 
-### Mutations
+### 1.2.3. Mutations
 
 First, add the createLink mutation to that typeDefs variable in src/schema/index.js:
 
@@ -277,7 +294,7 @@ To test, just restart the server again and use the new mutation with GraphiQL:
 
 <img src="https://i.imgur.com/4pKJ9ji.png">
 
-### Connectors
+### 1.2.4. Connectors
 
 Now you can actually connect to MongoDB in the code and start using it.
 
@@ -342,7 +359,7 @@ module.exports = {
 };
 ```
 
-### Authentication
+### 1.2.5. Authentication
 
 As always, first update the schema to define the new type and mutation:
 
@@ -510,7 +527,7 @@ Link: {
 },
 ```
 
-### Dataloaders
+### 1.2.6. Dataloaders
 
 The first thing you need to do is to install it in your project, via:
 
@@ -578,7 +595,7 @@ Vote: {
 },
 ```
 
-### Filtering
+### 1.2.7. Filtering
 
 So start by adding a new argument in the schema definition for this query:
 
